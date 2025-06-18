@@ -1,0 +1,28 @@
+feedback-app/
+│
+├── assets/                     # Imagens, ícones etc.
+│
+├── src/
+│   ├── api/                    # Arquivos para comunicação com a API
+│   │   └── feedbackApi.ts
+│   │
+│   ├── models/                 # Tipagens e modelos de dados (interfaces)
+│   │   └── UserRegistration.ts
+│   ├── viewmodels/            # Lógica da ViewModel (coordenadora da lógica de UI)
+│   │   
+│   ├── views/                 # Componentes de UI (telas e componentes)
+│   │   └── RegisterScreen.tsx
+│   │
+│   ├── components/            # Componentes reutilizáveis (inputs, botões etc.)
+│   │
+│   ├── navigation/            # Stack, Tabs etc.
+│   │   └── AppNavigator.tsx
+│   │
+│   └── utils/                 # Helpers, validadores etc.
+│       └── validators.ts
+│
+├── App.tsx                    # Entry point do Expo
+├── tsconfig.json
+└── package.json
+└── babel.config.js
+└──app.json
