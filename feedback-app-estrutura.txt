@@ -4,22 +4,27 @@ feedback-app/
 │
 ├── src/
 │   ├── api/                    # Arquivos para comunicação com a API
+│   │   └── authApi.ts
 │   │   └── feedbackApi.ts
 │   │
 │   ├── models/                 # Tipagens e modelos de dados (interfaces)
+│   │   └── AuthDTO.ts 
 │   │   └── UserRegistration.ts
+│   │
 │   ├── viewmodels/            # Lógica da ViewModel (coordenadora da lógica de UI)
+│   │   └── LoginViewModel.ts
+│   │   └── RegisterViewModel.ts
 │   │   
 │   ├── views/                 # Componentes de UI (telas e componentes)
+│   │   └──  LoginScreen.tsx
 │   │   └── RegisterScreen.tsx
 │   │
-│   ├── components/            # Componentes reutilizáveis (inputs, botões etc.)
 │   │
 │   ├── navigation/            # Stack, Tabs etc.
 │   │   └── AppNavigator.tsx
 │   │
 │   └── utils/                 # Helpers, validadores etc.
-│       └── validators.ts
+│
 │
 ├── App.tsx                    # Entry point do Expo
 ├── tsconfig.json
