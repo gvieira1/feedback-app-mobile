@@ -1,8 +1,9 @@
 // src/views/RegisterScreen.tsx
 import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import InputField from '../components/InputField';
 import FeedbackMessage from '../components/FeedbackMessage';
+import PrimaryButton from '../components/PrimaryButton';
 import { useRegisterViewModel } from '../viewmodels/RegisterViewModel';
 
 export default function RegisterScreen() {
@@ -12,7 +13,8 @@ export default function RegisterScreen() {
     password, setPassword,
     passwordConfirmation, setPasswordConfirmation,
     error, success,
-    handleRegister
+    handleRegister,
+    isLoading // opcional, caso queira controlar loading
   } = useRegisterViewModel();
 
   return (
@@ -45,8 +47,13 @@ export default function RegisterScreen() {
 
       {error && <FeedbackMessage message={error} type="error" />}
       {success && <FeedbackMessage message={success} type="success" />}
-      
-      <Button title="Registrar" onPress={handleRegister} />
+
+      <PrimaryButton
+        title="Registrar"
+        onPress={handleRegister}
+        disabled={isLoading} // desabilita se estiver carregando
+        loading={isLoading}  // mostra spinner se estiver carregando
+      />
     </View>
   );
 }

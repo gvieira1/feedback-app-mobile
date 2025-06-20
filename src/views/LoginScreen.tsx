@@ -1,17 +1,30 @@
 // src/views/LoginScreen.tsx
-import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import InputField from '../components/InputField';
 import FeedbackMessage from '../components/FeedbackMessage';
+import PrimaryButton from '../components/PrimaryButton';
 import { useLoginViewModel } from '../viewmodels/LoginViewModel';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
 
 export default function LoginScreen() {
   const {
     username, setUsername,
     password, setPassword,
     token, error,
-    login
+    login,
+    isLoading // opcional: adicione no viewmodel para controle de loading
   } = useLoginViewModel();
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    if (token) {
+      navigation.navigate('ListMyFeedbacks');
+    }
+  }, [token]);
 
   return (
     <View style={styles.container}>
@@ -28,7 +41,14 @@ export default function LoginScreen() {
       />
 
       {error && <FeedbackMessage message={error} type="error" />}
-      <Button title="Entrar" onPress={login} />
+      
+      <PrimaryButton
+        title="Entrar"
+        onPress={login}
+        disabled={isLoading}
+        loading={isLoading}
+      />
+
       {token && <FeedbackMessage message="Token recebido!" type="success" />}
     </View>
   );

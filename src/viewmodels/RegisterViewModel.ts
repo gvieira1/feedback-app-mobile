@@ -10,6 +10,9 @@ export const useRegisterViewModel = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  
+  // Estado loading adicionado
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
     setError(null);
@@ -27,6 +30,7 @@ export const useRegisterViewModel = () => {
       passwordConfirmation,
     };
 
+    setIsLoading(true);  // Inicia loading
     try {
       await registerPublicUser(data);
       setSuccess('Usuário registrado com sucesso!');
@@ -36,6 +40,8 @@ export const useRegisterViewModel = () => {
       setPasswordConfirmation('');
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setIsLoading(false);  // Termina loading
     }
   };
 
@@ -45,6 +51,7 @@ export const useRegisterViewModel = () => {
     password, setPassword,
     passwordConfirmation, setPasswordConfirmation,
     error, success,
+    isLoading,  // Exporta loading
     handleRegister
   };
 };

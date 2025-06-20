@@ -11,25 +11,32 @@ export const useLoginViewModel = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const login = async () => {
+    setIsLoading(true);
     try {
       const credentials: AuthDTO = { username, password };
       const receivedToken = await authenticateUser(credentials);
       setToken(receivedToken);
       setError(null);
 
-      //Salvando o token no armazenamento local
       await AsyncStorage.setItem('authToken', receivedToken);
-
-      //Indicador de sucesso
       setIsLoggedIn(true);
     } catch (err) {
       setError('Usuário ou senha inválidos');
       setIsLoggedIn(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  //Carregar token ao iniciar
+  const logout = async () => {
+    await AsyncStorage.removeItem('authToken');
+    setToken(null);
+    setIsLoggedIn(false);
+  };
+
   useEffect(() => {
     const checkStoredToken = async () => {
       const storedToken = await AsyncStorage.getItem('authToken');
@@ -49,6 +56,8 @@ export const useLoginViewModel = () => {
     token,
     error,
     isLoggedIn,
-    login
+    isLoading,
+    login,
+    logout
   };
 };

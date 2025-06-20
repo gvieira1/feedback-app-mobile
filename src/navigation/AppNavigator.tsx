@@ -2,15 +2,25 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../views/LoginScreen';
 import RegisterScreen from '../views/RegisterScreen';
+import ListMyFeedbacksScreen from '../views/ListMyFeedbacksScreen';
+import { RootStackParamList } from './types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Registro" component={RegisterScreen} />
-      {/* outras telas aqui */}
+      <Stack.Screen
+        name="ListMyFeedbacks"
+        component={ListMyFeedbacksScreen}
+        options={{
+          headerLeft: () => null,
+          headerBackVisible: false,
+          gestureEnabled: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }
