@@ -1,7 +1,12 @@
+// App.tsx
 import React from 'react';
-import RegisterScreen from './src/views/RegisterScreen';
-import LoginScreen from './src/views/LoginScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
-  return <RegisterScreen />;
+  return (
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
+  );
 }
