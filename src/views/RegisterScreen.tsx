@@ -1,68 +1,51 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import feedbackApi from '../api/feedbackApi'; // ajuste o caminho se necessário
+// src/views/RegisterScreen.tsx
+import React from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import InputField from '../components/InputField';
+import FeedbackMessage from '../components/FeedbackMessage';
+import { useRegisterViewModel } from '../viewmodels/RegisterViewModel';
 
 export default function RegisterScreen() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
-  const handleRegister = async () => {
-    if (password !== passwordConfirmation) {
-      Alert.alert('Erro', 'As senhas não coincidem.');
-      return;
-    }
-    
-    try {
-      await feedbackApi.post('/users/public-register', {
-        username,
-        email,
-        password,
-        passwordConfirmation,
-      });
-      Alert.alert('Sucesso', 'Usuário registrado com sucesso!');
-      // limpar campos
-      setUsername('');
-      setEmail('');
-      setPassword('');
-      setPasswordConfirmation('');
-    } catch (error: any) {
-      Alert.alert('Erro', error.response?.data?.message || 'Falha ao registrar usuário.');
-    }
-  };
+  const {
+    username, setUsername,
+    email, setEmail,
+    password, setPassword,
+    passwordConfirmation, setPasswordConfirmation,
+    error, success,
+    handleRegister
+  } = useRegisterViewModel();
 
   return (
     <View style={styles.container}>
-      <TextInput
+      <InputField
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
-        style={styles.input}
         autoCapitalize="none"
       />
-      <TextInput
+      <InputField
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <TextInput
+      <InputField
         placeholder="Senha"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
         secureTextEntry
       />
-      <TextInput
+      <InputField
         placeholder="Confirme a senha"
         value={passwordConfirmation}
         onChangeText={setPasswordConfirmation}
-        style={styles.input}
         secureTextEntry
       />
+
+      {error && <FeedbackMessage message={error} type="error" />}
+      {success && <FeedbackMessage message={success} type="success" />}
+      
       <Button title="Registrar" onPress={handleRegister} />
     </View>
   );
@@ -74,12 +57,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#fff',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    padding: 10,
-    marginBottom: 12,
-    borderRadius: 4,
   },
 });

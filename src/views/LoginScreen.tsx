@@ -1,6 +1,8 @@
 // src/views/LoginScreen.tsx
 import React from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
+import InputField from '../components/InputField';
+import FeedbackMessage from '../components/FeedbackMessage';
 import { useLoginViewModel } from '../viewmodels/LoginViewModel';
 
 export default function LoginScreen() {
@@ -13,32 +15,25 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
+      <InputField
         placeholder="Usuário"
         value={username}
         onChangeText={setUsername}
       />
-      <TextInput
-        style={styles.input}
+      <InputField
         placeholder="Senha"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+
+      {error && <FeedbackMessage message={error} type="error" />}
       <Button title="Entrar" onPress={login} />
-      {token && <Text style={styles.success}>Token recebido!</Text>}
+      {token && <FeedbackMessage message="Token recebido!" type="success" />}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flex: 1, justifyContent: 'center' },
-  input: {
-    borderWidth: 1, borderColor: '#ccc', borderRadius: 5,
-    padding: 10, marginBottom: 10
-  },
-  error: { color: 'red', marginBottom: 10 },
-  success: { color: 'green', marginTop: 10 }
+  container: { padding: 20, flex: 1, justifyContent: 'center' }
 });
