@@ -23,7 +23,7 @@ feedback-app/
 │   │   └── RegisterViewModel.ts
 │   │   
 │   ├── views/                 # UI (telas)
-│   │   └──  ListMyFeedbacksView.tsx
+│   │   └──  ListMyFeedbacksScreen.tsx
 │   │   └──  LoginScreen.tsx
 │   │   └──  RegisterScreen.tsx
 │   │
