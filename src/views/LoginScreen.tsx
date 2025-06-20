@@ -1,6 +1,6 @@
 // src/views/LoginScreen.tsx
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import InputField from '../components/InputField';
 import FeedbackMessage from '../components/FeedbackMessage';
 import PrimaryButton from '../components/PrimaryButton';
@@ -15,7 +15,7 @@ export default function LoginScreen() {
     password, setPassword,
     token, error,
     login,
-    isLoading // opcional: adicione no viewmodel para controle de loading
+    isLoading
   } = useLoginViewModel();
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -41,7 +41,7 @@ export default function LoginScreen() {
       />
 
       {error && <FeedbackMessage message={error} type="error" />}
-      
+
       <PrimaryButton
         title="Entrar"
         onPress={login}
@@ -50,10 +50,34 @@ export default function LoginScreen() {
       />
 
       {token && <FeedbackMessage message="Token recebido!" type="success" />}
+
+      <View style={styles.linkContainer}>
+        <Text style={styles.linkText}>Não tem conta?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
+          <Text style={styles.linkButton}> Cadastre-se</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flex: 1, justifyContent: 'center' }
+  container: {
+    padding: 20,
+    flex: 1,
+    justifyContent: 'center'
+  },
+  linkContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  linkText: {
+    color: '#333',
+  },
+  linkButton: {
+    color: '#1E88E5',
+    fontWeight: 'bold',
+  },
 });
