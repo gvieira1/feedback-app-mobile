@@ -2,15 +2,19 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
+import { getMyFeedbacks } from '../api/getMyFeedbacksApi';
+import { Feedback } from '../models/Feedback';
 
 interface DecodedToken {
-  sub?: string;        // padrão do Spring Security
-  username?: string;   // se você customizou seu token
-  // adicione outros campos se necessário
+  sub?: string;
+  username?: string;
 }
 
 export const useListMyFeedbacksViewModel = () => {
   const [username, setUsername] = useState<string | null>(null);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUsername = async () => {
@@ -24,5 +28,22 @@ export const useListMyFeedbacksViewModel = () => {
     loadUsername();
   }, []);
 
-  return { username };
+  useEffect(() => {
+    const loadFeedbacks = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getMyFeedbacks();
+        setFeedbacks(data);
+      } catch (err: any) {
+        setError(err.message || 'Erro ao carregar feedbacks');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFeedbacks();
+  }, []);
+
+  return { username, feedbacks, loading, error };
 };

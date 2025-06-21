@@ -1,4 +1,3 @@
-// src/views/LoginScreen.tsx
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import InputField from '../components/InputField';
@@ -15,16 +14,23 @@ export default function LoginScreen() {
     password, setPassword,
     token, error,
     login,
-    isLoading
+    isLoading,
+    userRole, // role do usuário
   } = useLoginViewModel();
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
-    if (token) {
-      navigation.navigate('ListMyFeedbacks');
+    if (token && userRole) {
+      if (userRole === 'EMPLOYEE') {
+        navigation.navigate('ListMyFeedbacks');
+      } else if (userRole === 'ADMIN') {
+        navigation.navigate('ListFeedbacks');
+      } else {
+        //Outros Tratamentos
+      }
     }
-  }, [token]);
+  }, [token, userRole]);
 
   return (
     <View style={styles.container}>
