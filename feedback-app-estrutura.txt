@@ -5,8 +5,11 @@ feedback-app/
 ├── src/
 │   ├── api/                    # Arquivos para comunicação com a API
 │   │   └── authApi.ts
+│   │   └── deleteFeedbackApi.ts
 │   │   └── feedbackApi.ts
+│   │   └── getAllFeedbacksApi.ts
 │   │   └── getMyFeedbacksApi.ts
+│   │   └── postFeedbackApi.ts
 │   │   └── publicRegisterApi.ts
 │   │   └── userApi.ts
 │   │
@@ -21,13 +24,18 @@ feedback-app/
 │   │   └── UserRegistration.ts
 │   │
 │   ├── viewmodels/            # Lógica da ViewModel (coordenadora da lógica de UI)
+│   │   └── FeedbackDetailViewModel.ts
+│   │   └── ListAllFeedbacksViewModel.ts
 │   │   └── ListMyFeedbacksViewModel.ts
 │   │   └── LoginViewModel.ts
 │   │   └── PublicRegisterViewModel.ts
 │   │   └── useUserProfileViewModel.ts
+│   │   └── WriteFeedbackViewModel.ts
 │   │   
 │   ├── views/                 # UI (telas)
-│   │   └──  ListFeedbacksScreen.tsx
+│   │   └──  FeedbackDetailAdminScreen.tsx
+│   │   └──  FeedbackDetailScreen.tsx
+│   │   └──  ListAllFeedbacksScreen.tsx
 │   │   └──  ListMyFeedbacksScreen.tsx
 │   │   └──  LoginScreen.tsx
 │   │   └──  PublicRegisterScreen.tsx
