@@ -1,25 +1,32 @@
 import React from 'react';
 import {
   View,
-  Button,
   StyleSheet,
   Text,
+  Button,
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../navigation/types';
 import { useListMyFeedbacksViewModel } from '../viewmodels/ListMyFeedbacksViewModel';
 import PrimaryButton from '../components/PrimaryButton';
+import { Feedback } from '../models/Feedback';
+
+type ListMyFeedbacksRouteProp = RouteProp<RootStackParamList, 'ListMyFeedbacks'>;
 
 const ListMyFeedbacksScreen = () => {
-  const { username, feedbacks, loading, error } = useListMyFeedbacksViewModel();
+  const route = useRoute<ListMyFeedbacksRouteProp>();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const { username, feedbacks, loading, error } = useListMyFeedbacksViewModel();
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -43,6 +50,19 @@ const ListMyFeedbacksScreen = () => {
       ),
     });
   }, [navigation, username]);
+
+  // Mostrar alerta de sucesso se veio parâmetro feedbackSent
+  React.useEffect(() => {
+    if (route.params?.feedbackSent) {
+      Alert.alert('Sucesso', 'Feedback enviado com sucesso!');
+      // Limpa o param para não mostrar alerta de novo quando voltar para essa tela
+      navigation.setParams({ feedbackSent: undefined });
+    }
+  }, [route.params, navigation]);
+
+  const handlePressFeedback = (feedback: Feedback) => {
+    navigation.navigate('FeedbackDetail', { feedback });
+  };
 
   if (loading) {
     return (
@@ -78,14 +98,18 @@ const ListMyFeedbacksScreen = () => {
             data={feedbacks}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.feedbackItem}>
-                <Text style={styles.title}>{item.titulo}</Text>
-                <Text>{item.content}</Text>
-                <Text style={styles.author}>Enviado por: {item.authorName}</Text>
-                <Text style={styles.date}>
-                  {new Date(item.createdAt).toLocaleDateString()}
-                </Text>
-              </View>
+              <TouchableOpacity onPress={() => handlePressFeedback(item)}>
+                <View style={styles.feedbackItem}>
+                  <Text style={styles.title}>{item.titulo}</Text>
+                  <Text numberOfLines={2}>{item.content}</Text>
+                  <Text style={styles.author}>
+                    Enviado por: {item.anonymous ? 'Anônimo' : item.authorName}
+                  </Text>
+                  <Text style={styles.date}>
+                    {new Date(item.createdAt).toLocaleDateString()}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             )}
             contentContainerStyle={{ paddingBottom: 20 }}
             style={{ flex: 1 }}
@@ -138,7 +162,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     paddingVertical: 10,
-     paddingBottom: 60,
+    paddingBottom: 60,
   },
 });
 

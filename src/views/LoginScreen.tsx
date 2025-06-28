@@ -25,7 +25,7 @@ export default function LoginScreen() {
       if (userRole === 'EMPLOYEE') {
         navigation.navigate('ListMyFeedbacks');
       } else if (userRole === 'ADMIN') {
-        navigation.navigate('ListFeedbacks');
+        navigation.navigate('ListAllFeedbacks');
       } else {
         //Outros Tratamentos
       }

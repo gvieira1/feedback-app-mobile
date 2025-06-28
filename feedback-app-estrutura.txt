@@ -6,7 +6,9 @@ feedback-app/
 │   ├── api/                    # Arquivos para comunicação com a API
 │   │   └── authApi.ts
 │   │   └── feedbackApi.ts
+│   │   └── getMyFeedbacksApi.ts
 │   │   └── publicRegisterApi.ts
+│   │   └── userApi.ts
 │   │
 │   ├── components/             # Componentes
 │   │   └── FeedbackMessage.tsx
@@ -14,18 +16,23 @@ feedback-app/
 │   │   └── PrimaryButton.tsx
 │   │ 
 │   ├── models/                 # Tipagens e modelos de dados (interfaces)
-│   │   └── AuthDTO.ts 
+│   │   └── AuthDTO.ts
+│   │   └── FeedbackMessage.ts 
 │   │   └── UserRegistration.ts
 │   │
 │   ├── viewmodels/            # Lógica da ViewModel (coordenadora da lógica de UI)
 │   │   └── ListMyFeedbacksViewModel.ts
 │   │   └── LoginViewModel.ts
 │   │   └── PublicRegisterViewModel.ts
+│   │   └── useUserProfileViewModel.ts
 │   │   
 │   ├── views/                 # UI (telas)
+│   │   └──  ListFeedbacksScreen.tsx
 │   │   └──  ListMyFeedbacksScreen.tsx
 │   │   └──  LoginScreen.tsx
 │   │   └──  PublicRegisterScreen.tsx
+│   │   └──  UserProfileScreen.tsx
+│   │   └──  WriteFeedbackScreen.tsx
 │   │
 │   │
 │   ├── navigation/            # Stack, Tabs etc.
@@ -40,4 +47,3 @@ feedback-app/
 └── package.json
 └── babel.config.js
 └──app.json
-

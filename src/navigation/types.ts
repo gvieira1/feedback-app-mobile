@@ -1,8 +1,13 @@
+// src/navigation/types.ts
+import { Feedback } from '../models/Feedback';
+
 export type RootStackParamList = {
   Login: undefined;
   Registro: undefined;
-  ListFeedbacks: undefined;
-  ListMyFeedbacks: undefined;
+  ListMyFeedbacks: { feedbackSent?: boolean };
+  ListAllFeedbacks: undefined;
   UserProfile: undefined;
   WriteFeedback: undefined;
+  FeedbackDetail: { feedback: Feedback };
+  FeedbackDetailAdmin: { feedback: Feedback };
 };
