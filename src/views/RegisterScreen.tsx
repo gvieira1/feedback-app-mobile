@@ -20,7 +20,7 @@ export default function RegisterScreen() {
   return (
     <View style={styles.container}>
       <InputField
-        placeholder="Username"
+        placeholder="Usuário"
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -49,7 +49,7 @@ export default function RegisterScreen() {
       {success && <FeedbackMessage message={success} type="success" />}
 
       <PrimaryButton
-        title="Registrar"
+        title="Cadastrar"
         onPress={handleRegister}
         disabled={isLoading} // desabilita se estiver carregando
         loading={isLoading}  // mostra spinner se estiver carregando
