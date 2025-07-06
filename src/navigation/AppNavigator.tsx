@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from '../views/LoginScreen';
 import RegisterScreen from '../views/PublicRegisterScreen';
+import AdminRegisterScreen from '../views/AdminRegisterScreen';
 import ListMyFeedbacksScreen from '../views/ListMyFeedbacksScreen';
 import ListAllFeedbacksScreen from '../views/ListAllFeedbacksScreen';
 import FeedbackDetailScreen from '../views/FeedbackDetailScreen';
@@ -20,6 +21,13 @@ export default function AppNavigator() {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Registro" component={RegisterScreen} />
+      <Stack.Screen 
+        name="AdminRegister" 
+        component={AdminRegisterScreen}
+        options={{
+          title: 'Cadastro de Administrador',
+        }}
+      />
       <Stack.Screen
         name="ListMyFeedbacks"
         component={ListMyFeedbacksScreen}
@@ -47,7 +55,13 @@ export default function AppNavigator() {
           title: 'Perfil do Usuário',
         }}
       />
-      <Stack.Screen name="WriteFeedback" component={WriteFeedbackScreen} />
+      <Stack.Screen 
+        name="WriteFeedback" 
+        component={WriteFeedbackScreen}
+        options={{
+          title: 'Escrever Feedback',
+        }}
+      />
     </Stack.Navigator>
   );
 }

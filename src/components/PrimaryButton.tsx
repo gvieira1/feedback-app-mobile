@@ -1,34 +1,17 @@
-// src/components/PrimaryButton.tsx
 import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
-import { primaryButtonStyles as styles } from './styles/PrimaryButton.styles';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 type PrimaryButtonProps = {
   title: string;
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  buttonStyle?: ViewStyle;
-  textStyle?: TextStyle;
 };
 
-export default function PrimaryButton({
-  title,
-  onPress,
-  disabled = false,
-  loading = false,
-  buttonStyle,
-  textStyle,
-}: PrimaryButtonProps) {
+export default function PrimaryButton({ title, onPress, disabled = false, loading = false }: PrimaryButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.button, buttonStyle, disabled && styles.disabled]}
+      style={[styles.button, disabled && styles.disabled]}
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.7}
@@ -36,8 +19,29 @@ export default function PrimaryButton({
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <Text style={[styles.text, textStyle]}>{title}</Text>
+        <Text style={styles.text}>{title}</Text>
       )}
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    minWidth: 140,
+  },
+  disabled: {
+    backgroundColor: '#999',
+  },
+  text: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+});

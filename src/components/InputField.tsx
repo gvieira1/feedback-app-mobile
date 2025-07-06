@@ -10,10 +10,10 @@ export default function InputField(props: InputFieldProps) {
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: 1.3,
+    borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 13.5,
+    padding: 10,
     marginBottom: 10,
   },
 });

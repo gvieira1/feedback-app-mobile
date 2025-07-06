@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -16,19 +15,18 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import { useListAllFeedbacksViewModel } from '../viewmodels/ListAllFeedbacksViewModel';
 import { Feedback } from '../models/Feedback';
+import AdminBottomNavigationBar from '../components/AdminBottomNavigationBar';
 
 const ListAllFeedbacksScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { feedbacks, loading, error, reloadFeedbacks } = useListAllFeedbacksViewModel();
 
-  // Atualiza opções do header
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Todos os Feedbacks',
       headerBackVisible: false,
       headerRight: () => (
-        <Button
-          title="Sair"
+        <TouchableOpacity
           onPress={async () => {
             await AsyncStorage.removeItem('authToken');
             navigation.reset({
@@ -36,12 +34,14 @@ const ListAllFeedbacksScreen = () => {
               routes: [{ name: 'Login' }],
             });
           }}
-        />
+          style={{ marginRight: 12 }}
+        >
+          <Text style={{ color: '#007AFF', fontSize: 16 }}>Sair</Text>
+        </TouchableOpacity>
       ),
     });
   }, [navigation]);
 
-  // Recarrega feedbacks toda vez que a tela recebe foco
   useFocusEffect(
     React.useCallback(() => {
       reloadFeedbacks();
@@ -92,10 +92,11 @@ const ListAllFeedbacksScreen = () => {
               </View>
             </TouchableOpacity>
           )}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 100 }}
           style={{ flex: 1 }}
         />
       )}
+      <AdminBottomNavigationBar />
     </SafeAreaView>
   );
 };

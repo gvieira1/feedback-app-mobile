@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Button,
   FlatList,
   ActivityIndicator,
   SafeAreaView,
@@ -19,6 +18,7 @@ import { RootStackParamList } from '../navigation/types';
 import { useListMyFeedbacksViewModel } from '../viewmodels/ListMyFeedbacksViewModel';
 import PrimaryButton from '../components/PrimaryButton';
 import { Feedback } from '../models/Feedback';
+import EmployeeBottomNavigationBar from '../components/EmployeeBottomNavigationBar';
 
 type ListMyFeedbacksRouteProp = RouteProp<RootStackParamList, 'ListMyFeedbacks'>;
 
@@ -37,8 +37,7 @@ const ListMyFeedbacksScreen = () => {
       ),
       headerBackVisible: false,
       headerRight: () => (
-        <Button
-          title="Sair"
+        <TouchableOpacity
           onPress={async () => {
             await AsyncStorage.removeItem('authToken');
             navigation.reset({
@@ -46,16 +45,17 @@ const ListMyFeedbacksScreen = () => {
               routes: [{ name: 'Login' }],
             });
           }}
-        />
+          style={{ marginRight: 12 }}
+        >
+          <Text style={{ color: '#007AFF', fontSize: 16 }}>Sair</Text>
+        </TouchableOpacity>
       ),
     });
   }, [navigation, username]);
 
-  // Mostrar alerta de sucesso se veio parâmetro feedbackSent
   React.useEffect(() => {
     if (route.params?.feedbackSent) {
       Alert.alert('Sucesso', 'Feedback enviado com sucesso!');
-      // Limpa o param para não mostrar alerta de novo quando voltar para essa tela
       navigation.setParams({ feedbackSent: undefined });
     }
   }, [route.params, navigation]);
@@ -85,7 +85,7 @@ const ListMyFeedbacksScreen = () => {
       {feedbacks.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text>Você não possui feedbacks ainda.</Text>
-          <View style={styles.buttonWrapper}>
+          <View style={[styles.buttonWrapper, { marginBottom: 100 }]}>
             <PrimaryButton
               title="Escrever Feedback"
               onPress={() => navigation.navigate('WriteFeedback')}
@@ -111,10 +111,10 @@ const ListMyFeedbacksScreen = () => {
                 </View>
               </TouchableOpacity>
             )}
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerStyle={{ paddingBottom: 120 }}
             style={{ flex: 1 }}
           />
-          <View style={styles.buttonWrapper}>
+          <View style={[styles.buttonWrapper, { marginBottom: 100 }]}>
             <PrimaryButton
               title="Escrever Feedback"
               onPress={() => navigation.navigate('WriteFeedback')}
@@ -122,6 +122,7 @@ const ListMyFeedbacksScreen = () => {
           </View>
         </>
       )}
+      <EmployeeBottomNavigationBar />
     </SafeAreaView>
   );
 };
@@ -162,7 +163,6 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     paddingVertical: 10,
-    paddingBottom: 60,
   },
 });
 

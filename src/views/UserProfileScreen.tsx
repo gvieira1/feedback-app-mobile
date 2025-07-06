@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import { useUserProfileViewModel } from '../viewmodels/useUserProfileViewModel';
+import AdminBottomNavigationBar from '../components/AdminBottomNavigationBar';
+import EmployeeBottomNavigationBar from '../components/EmployeeBottomNavigationBar';
 
 export default function UserProfileScreen() {
   const { user, error, isLoading, reload } = useUserProfileViewModel();
@@ -31,6 +33,8 @@ export default function UserProfileScreen() {
     );
   }
 
+  const role = user.role.toLowerCase();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Perfil do Usuário</Text>
@@ -42,6 +46,10 @@ export default function UserProfileScreen() {
 
       <Text style={styles.label}>Role:</Text>
       <Text style={styles.value}>{user.role}</Text>
+
+      {/* Renderiza conforme a role */}
+      {role === 'admin' && <AdminBottomNavigationBar />}
+      {role === 'employee' && <EmployeeBottomNavigationBar />}
     </View>
   );
 }

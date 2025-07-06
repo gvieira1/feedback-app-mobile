@@ -1,15 +1,25 @@
-// src/views/PublicRegisterScreen.tsx
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
 import InputField from '../components/InputField';
 import FeedbackMessage from '../components/FeedbackMessage';
 import PrimaryButton from '../components/PrimaryButton';
-import { useRegisterViewModel } from '../viewmodels/PublicRegisterViewModel';
+import { useAdminRegisterViewModel } from '../viewmodels/AdminRegisterViewModel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types'; // ajuste conforme seu projeto
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
 
-export default function PublicRegisterScreen() {
+export default function AdminRegisterScreen() {
+  const [token, setToken] = React.useState<string | null>(null);
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  React.useEffect(() => {
+    AsyncStorage.getItem('authToken').then(storedToken => {
+      setToken(storedToken);
+    });
+  }, []);
+
   const {
     username, setUsername,
     email, setEmail,
@@ -17,20 +27,24 @@ export default function PublicRegisterScreen() {
     passwordConfirmation, setPasswordConfirmation,
     error, success,
     handleRegister,
-    isLoading
-  } = useRegisterViewModel();
+    isLoading,
+  } = useAdminRegisterViewModel(token ?? '');
 
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (success) {
-      const timeout = setTimeout(() => {
-        navigation.navigate('Login');
-      }, 1500);
-
-      return () => clearTimeout(timeout);
+      Alert.alert(
+        'Sucesso',
+        'Usuário ADMIN cadastrado com sucesso!',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('ListAllFeedbacks')
+          }
+        ],
+        { cancelable: false }
+      );
     }
-  }, [success]);
+  }, [success, navigation]);
 
   return (
     <View style={styles.container}>
@@ -61,12 +75,11 @@ export default function PublicRegisterScreen() {
       />
 
       {error && <FeedbackMessage message={error} type="error" />}
-      {success && <FeedbackMessage message={success} type="success" />}
 
       <PrimaryButton
-        title="Registrar"
+        title="Registrar Admin"
         onPress={handleRegister}
-        disabled={isLoading}
+        disabled={isLoading || !token}
         loading={isLoading}
       />
     </View>

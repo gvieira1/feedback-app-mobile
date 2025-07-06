@@ -3,7 +3,8 @@ import { Feedback } from '../models/Feedback';
 
 export type RootStackParamList = {
   Login: undefined;
-  "Cadastre-se": undefined;
+  Registro: undefined;
+  AdminRegister: undefined;
   ListMyFeedbacks: { feedbackSent?: boolean };
   ListAllFeedbacks: undefined;
   UserProfile: undefined;
