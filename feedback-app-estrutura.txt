@@ -4,13 +4,19 @@ feedback-app/
 │
 ├── src/
 │   ├── api/                    # Arquivos para comunicação com a API
+│   │   └── adminRegisterApi.ts
 │   │   └── authApi.ts
+│   │   └── deleteApi.ts
 │   │   └── feedbackApi.ts
+│   │   └── getAllFeedbacksApi.ts
 │   │   └── getMyFeedbacksApi.ts
+│   │   └── postFeedbackApi.ts
 │   │   └── publicRegisterApi.ts
 │   │   └── userApi.ts
 │   │
 │   ├── components/             # Componentes
+│   │   └── AdminBottomNavigatorBar.tsx
+│   │   └── EmployeeBottomNavigatorBar.tsx
 │   │   └── FeedbackMessage.tsx
 │   │   └── InputField.tsx
 │   │   └── PrimaryButton.tsx
@@ -21,12 +27,20 @@ feedback-app/
 │   │   └── UserRegistration.ts
 │   │
 │   ├── viewmodels/            # Lógica da ViewModel (coordenadora da lógica de UI)
+│   │   └── AdminRegisterViewModel.ts
+│   │   └── FeedbackDetailViewModel.ts
+│   │   └── ListAllFeedbacksViewModel.ts
 │   │   └── ListMyFeedbacksViewModel.ts
 │   │   └── LoginViewModel.ts
 │   │   └── PublicRegisterViewModel.ts
 │   │   └── useUserProfileViewModel.ts
+│   │   └── WriteFeedbackViewModel.ts
 │   │   
 │   ├── views/                 # UI (telas)
+│   │   └──  ListFeedbacksScreen.tsx
+│   │   └──  ListDetailAdminScreen.tsx
+│   │   └──  ListDetailScreen.tsx
+│   │   └──  ListAllFeedbacksScreen.tsx
 │   │   └──  ListFeedbacksScreen.tsx
 │   │   └──  ListMyFeedbacksScreen.tsx
 │   │   └──  LoginScreen.tsx
@@ -43,6 +57,7 @@ feedback-app/
 │
 │
 ├── App.tsx                    # Entry point do Expo
+├── index.ts
 ├── tsconfig.json
 └── package.json
 └── babel.config.js
